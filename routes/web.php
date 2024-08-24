@@ -97,3 +97,5 @@ Route::post('/profile/add-balance', [UserController::class, 'addBalance'])->name
 
 Route::get('/avatars', [AvatarController::class, 'index'])->name('avatars.index');
 Route::post('/avatars/purchase/{id}', [AvatarController::class, 'purchase'])->name('avatars.purchase');
+
+Route::post('/profile/toggle-visibility', [UserController::class, 'toggleVisibility'])->name('profile.toggleVisibility');

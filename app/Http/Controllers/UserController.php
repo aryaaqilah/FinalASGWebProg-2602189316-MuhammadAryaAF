@@ -194,4 +194,32 @@ class UserController extends Controller
 
         return redirect()->route('profile.show')->with('success', 'Balance increased by 100!');
     }
+
+    public function toggleVisibility(Request $request)
+    {
+        $user = Auth::user();
+        $cost = 100; // Biaya untuk menyembunyikan profil
+
+        if ($user->balance >= $cost) {
+            // Kurangi saldo pengguna
+            $user->balance -= $cost;
+
+            // Jika profil saat ini terlihat, sembunyikan dan ganti foto profil
+            if ($user->is_visible) {
+                $user->is_visible = false;
+                $user->profile_path = 'images/bear.png';
+            } else {
+                // Jika profil saat ini tidak terlihat, tampilkan kembali
+                $user->is_visible = true;
+                $user->profile_path = null; // Atur ke nilai default atau avatar yang sudah dipilih
+            }
+
+            // Simpan perubahan
+            $user->save();
+
+            return redirect()->route('profile.show')->with('success', $user->is_visible ? 'Profile is now visible!' : 'Profile is now hidden and balance has been deducted.');
+        } else {
+            return redirect()->route('profile.show')->with('error', 'Insufficient balance to change profile visibility.');
+        }
+    }
 }

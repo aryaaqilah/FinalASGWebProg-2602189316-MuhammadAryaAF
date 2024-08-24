@@ -12,6 +12,12 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">{{ $user->name }}</h4>
@@ -31,6 +37,11 @@
                 <form action="{{ route('profile.addBalance') }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-primary mt-3">Add 100 to Balance</button>
+                </form>
+
+                <form action="{{ route('profile.toggleVisibility') }}" method="POST" class="mt-3">
+                    @csrf
+                    <button type="submit" class="btn btn-secondary">{{ $user->is_visible ? 'Hide Profile (100)' : 'Show Profile' }}</button>
                 </form>
             </div>
         </div>

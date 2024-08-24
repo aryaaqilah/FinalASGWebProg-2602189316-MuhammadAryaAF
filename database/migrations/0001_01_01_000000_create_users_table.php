@@ -24,6 +24,8 @@ return new class extends Migration
             $table->integer('balance')->nullable();
             $table->boolean('has_paid')->default(false);
             $table->string('profile_path')->nullable();
+            $table->boolean('is_visible')->default(true);
+            $table->string('invisible_image_path')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
