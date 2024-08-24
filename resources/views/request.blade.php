@@ -9,6 +9,7 @@
     @endif
     <div class="container">
         <div class="row">
+            {{-- {{ dd($friendRequest) }} --}}
             @foreach ($friendRequest as $user)
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MutualController;
 use App\Http\Controllers\NotificationController;
@@ -8,12 +9,31 @@ use App\Http\Controllers\ThumbController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('layout');
 });
 
+
+// Nama rute harus 'language'
+// Route::get('/language/{lang}', [UserController::class, 'language'])->name('language');
+// Route::get('lang/{locale}', function ($locale) {
+//     if (in_array($locale, ['en', 'id'])) { // Add all supported languages here
+//         session(['locale' => $locale]);
+//         // app()->setLocale($locale);
+//         App::setLocale($locale);
+//     }
+//     return redirect()->back();
+// })->name('switch.language');
+
 // Route::get('/detail/{id}', [BookController::class, 'detail'])->name('books.detail');
+
+Route::get('/locale/{loc}', function ($loc) {
+    Session::put('locale', $loc);
+    return redirect()->back();
+})->name('locale');
+
 
 Route::resource('/register', UserController::class);
 Route::get('/home', [UserController::class, 'index2'])->name('user.index2');
@@ -54,3 +74,26 @@ Route::post('/overpayment', [AuthenticationController::class, 'processOverpaymen
     Route::resource('message', MessageController::class);
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 // });
+
+// Route::get('lang/{locale}', function ($locale) {
+//     if (!in_array($locale, ['en', 'id'])) {
+//         abort(400);
+//     }
+
+//     session(['locale' => $locale]);
+//     return redirect()->back();
+// })->name('lang.switch');
+
+Route::post('/friend-request/accept/{id}', [ThumbController::class, 'accept'])->name('friend-request.accept');
+
+Route::get('/notifications', function () {
+    return view('notifications');
+})->name('notifications.index');
+
+
+Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
+Route::post('/profile/add-balance', [UserController::class, 'addBalance'])->name('profile.addBalance');
+
+
+Route::get('/avatars', [AvatarController::class, 'index'])->name('avatars.index');
+Route::post('/avatars/purchase/{id}', [AvatarController::class, 'purchase'])->name('avatars.purchase');

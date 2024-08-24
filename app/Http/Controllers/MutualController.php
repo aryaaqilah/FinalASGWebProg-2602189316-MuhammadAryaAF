@@ -7,6 +7,7 @@ use App\Models\Thumb;
 use App\Models\User;
 use App\Notifications\ThumbAccepted;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class MutualController extends Controller
@@ -16,6 +17,8 @@ class MutualController extends Controller
      */
     public function index()
     {
+        $loc = session()->get('locale');
+        App::setLocale($loc);
         $currentUserID = Auth::user()->id;
         $dataFriend = Mutual::where('id_usr_a', '=', $currentUserID)->join('users', 'users.id', '=', 'mutuals.id_usr_b')->get(['users.*']);
 
@@ -58,7 +61,7 @@ class MutualController extends Controller
 
         // Notify the user whose request was accepted
         $receiver = User::find($friendID);
-        $receiver->notify(new ThumbAccepted($currentUserID));
+        // $receiver->notify(new ThumbAccepted($currentUserID));
 
         return redirect()->route('friend-request.index')->with('success', 'Friend request accepted and notification sent!');
     }

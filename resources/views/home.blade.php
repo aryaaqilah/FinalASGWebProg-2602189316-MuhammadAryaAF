@@ -9,7 +9,7 @@
     @endif
 
     <div class="container">
-        <h3>Notifications</h3>
+        <h5>Notifications</h5>
         <div class="alert alert-info">
             <ul class="list-unstyled mb-0">
                 @forelse (Auth::user()->notifications as $notification)
@@ -104,7 +104,7 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $user->name }}</h5>
                             <p class="card-text">{{ $user->fields_of_work }}</p>
-                            <form method="POST" action="" class="mt-auto">
+                            <form method="POST" action="{{ route('friend-request.store') }}" class="mt-auto">
                                 @csrf
                                 <input type="hidden" name="receiver_id" value="{{ $user->id }}">
                                 <button type="submit" class="btn btn-primary w-100">Send Request</button>

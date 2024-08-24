@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+// use App;
 
 class UserController extends Controller
 {
@@ -23,6 +25,15 @@ class UserController extends Controller
 
     public function index2(Request $request)
 {
+
+    $loc = session()->get('locale');
+        App::setLocale($loc);
+
+
+    if (!Auth::check()) {
+        return redirect('/login'); // Redirect to the login page if the user is not authenticated
+    }
+
     $currentUserID = Auth::user()->id;
     $searchTerm = $request->input('search');
     $genderFilter = $request->input('gender');
@@ -153,5 +164,34 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function language(Request $request, string $lang)
+    {
+        // Set locale
+        App::setLocale($lang);
+        // dd($lang);
+
+        // Store language preference in session
+        $request->session()->put('locale', $lang);
+
+        // Redirect to the home page after changing language
+        return redirect('/home');
+    }
+
+    public function showProfile()
+    {
+        $user = Auth::user();
+        return view('profile', compact('user'));
+    }
+
+    // Menambah balance sebanyak 100
+    public function addBalance(Request $request)
+    {
+        $user = Auth::user();
+        $user->balance += 100;
+        $user->save();
+
+        return redirect()->route('profile.show')->with('success', 'Balance increased by 100!');
     }
 }

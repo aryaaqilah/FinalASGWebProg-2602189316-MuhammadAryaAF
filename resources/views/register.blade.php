@@ -4,14 +4,14 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
-            <h1>Add New User</h1>
+            <h1>Registration Page</h1>
             <div class="card border-0 shadow rounded">
                 <div class="card-body">
                     <form action="{{ route('register.store') }}" method="POST">
                         <!-- token form -->
                         @csrf
                         <div class="mb-3">
-                            <label for="username">Username</label>
+                            <label for="username">Email</label>
                             <input type="text" class="form-control @error('username') is-invalid @enderror"
                                    name="username" id="username" value="{{ old('username') }}">
 
@@ -127,10 +127,11 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-md btn-primary">Save</button>
-                        <a href="" class="btn btn-md btn-secondary">back</a>
-
+                        <button type="submit" class="btn btn-md btn-primary">Register</button>
                     </form>
+                    <div class="mt-3">
+                        <p>Already have an account? <a href="{{ url('/login') }}" class="text-primary">Login here</a></p>
+                    </div>
                 </div>
             </div>
         </div>

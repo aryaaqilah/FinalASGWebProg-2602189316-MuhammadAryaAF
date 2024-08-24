@@ -11,7 +11,7 @@
                         <!-- token form -->
                         @csrf
                         <div class="mb-3">
-                            <label for="username">Username</label>
+                            <label for="username">Email</label>
                             <input type="text" class="form-control @error('username') is-invalid @enderror"
                                    name="username" id="username" value="{{ old('username') }}">
 
@@ -36,10 +36,14 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-md btn-primary">Save</button>
-                        <a href="" class="btn btn-md btn-secondary">back</a>
-
+                        <button type="submit" class="btn btn-md btn-primary">Login</button>
+                        {{-- <a href="" class="btn btn-md btn-secondary">back</a> --}}
                     </form>
+
+                    <!-- Link to the registration page -->
+                    <div class="mt-3">
+                        <p>Don't have an account? <a href="{{ url('/register') }}" class="text-primary">Register here</a></p>
+                    </div>
                 </div>
             </div>
         </div>

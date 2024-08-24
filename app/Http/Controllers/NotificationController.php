@@ -61,7 +61,7 @@ class NotificationController extends Controller
      */
     public function destroy($id)
     {
-        $notification = Auth::user()->notifications()->find($id);
+        $notification = Auth::user()->notifications->find($id);
 
         if ($notification) {
             $notification->delete();

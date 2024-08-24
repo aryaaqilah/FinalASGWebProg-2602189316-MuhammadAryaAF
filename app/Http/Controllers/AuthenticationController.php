@@ -84,7 +84,7 @@ class AuthenticationController extends Controller
             // Mark payment as successful and handle business logic
             $user->has_paid = true;
             // $user->save();
-            return redirect()->back()->with('success', 'Payment successful!');
+            return redirect()->route('user.index2');
         }
     }
 

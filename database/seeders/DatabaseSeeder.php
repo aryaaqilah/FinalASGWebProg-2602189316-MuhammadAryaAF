@@ -57,6 +57,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             MutualSeeder::class,
             ThumbSeeder::class,
+            AvatarSeeder::class,
         ]);
     }
 }
